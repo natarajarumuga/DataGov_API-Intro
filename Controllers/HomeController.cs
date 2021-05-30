@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DataGov_API_Intro.Models;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +28,7 @@ namespace DataGov_API_Intro.Controllers
             string NATIONAL_PARK_API_PATH = BASE_URL + "/parks?limit=20";
             string parksData = "";
 
-            //Parks parks = null;
+            Parks parks = null;
 
             httpClient.BaseAddress = new Uri(NATIONAL_PARK_API_PATH);
 
@@ -44,11 +46,11 @@ namespace DataGov_API_Intro.Controllers
                 if (!parksData.Equals(""))
                 {
                     // JsonConvert is part of the NewtonSoft.Json Nuget package
-                    //parks = JsonConvert.DeserializeObject<Parks>(parksData);
+                    parks = JsonConvert.DeserializeObject<Parks>(parksData);
                 }
 
                 //dbContext.Parks.Add(parks);
-               // await dbContext.SaveChangesAsync();
+                // await dbContext.SaveChangesAsync();
             }
             catch (Exception e)
             {
@@ -56,7 +58,7 @@ namespace DataGov_API_Intro.Controllers
                 Console.WriteLine(e.Message);
             }
 
-            return View();
+            return View(parks);
         }
     }
 }
